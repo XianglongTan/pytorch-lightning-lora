@@ -42,7 +42,7 @@ class Dataset(Dataset):
             ids = feature["input_ids"]
             seq_len = feature["seq_len"]
             labels = (
-                [self.label_ignore_idx] * (seq_len - 1) + ids[seq_len:] + [self.label_ignore_idx] * (longest - ids_l)  # ignore input prompt when calculate loss
+                [self.label_ignore_idx] * (seq_len) + ids[seq_len:] + [self.label_ignore_idx] * (longest - ids_l)  # ignore input prompt when calculate loss
             )
             ids = ids + [self.tokenizer.pad_token_id] * (longest - ids_l)
             _ids = torch.LongTensor(ids)
