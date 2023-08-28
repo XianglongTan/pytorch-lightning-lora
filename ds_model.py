@@ -146,8 +146,8 @@ class PhoenixModel(pl.LightningModule):
         result = self.model(**batch)
         self.log('eval_loss', result.loss, on_step=False, prog_bar=True, on_epoch=True, sync_dist=True)
         eval_pred = torch.argmax(result.logits, dim=-1)
-        self.eval_pred.append(eval_pred)
-        self.eval_label.append(batch['labels'])
+        self.eval_pred.append(eval_pred[:,:-1])
+        self.eval_label.append(batch['labels'][:,1:])
     
     def on_validation_epoch_end(self):
         batch_acc_lst, batch_token_acc_lst = [], []
